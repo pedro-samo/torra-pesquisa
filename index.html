@@ -33,7 +33,7 @@
     </header>
 
     <form class="torra_form">
-      <h2>O que faria você voltar a comprar no site ou APP da Lojas Torra?</h2>
+      <h2>O que faria você voltar a comprar no site ou APP da Torra?</h2>
       <div class="control-box">
         <div class="control-group">
           <label class="control control-checkbox">
@@ -52,7 +52,7 @@
             <div class="control_indicator"></div>
           </label>
           <label class="control control-checkbox">
-            Mais benefícios
+            Ter mais benefícios
             <input type="checkbox" value="Mais benefícios" />
             <div class="control_indicator"></div>
           </label>
@@ -63,17 +63,17 @@
               <div class="control_indicator"></div>
             </label>
             <label class="control control-checkbox">
-              Descontos Progressivos
+              Descontos progressivos
               <input type="checkbox" value="Descontos Progressivos" />
               <div class="control_indicator"></div>
             </label>
             <label class="control control-checkbox">
-              Programa de Fidelidade
+              Programa de fidelidade
               <input type="checkbox" value="Programa de Fidelidade" />
               <div class="control_indicator"></div>
             </label>
             <label class="control control-checkbox">
-              Cashback nas Compras
+              Cashback nas compras
               <input type="checkbox" value="Cashback nas Compras" />
               <div class="control_indicator"></div>
             </label>
@@ -96,16 +96,23 @@
             <div class="control_indicator"></div>
           </label>
           <label class="control control-checkbox">
-            Nenhuma das alternativas acima
-            <input type="checkbox" value="Nenhuma das alternativas acima" />
+            Menor Preço
+            <input type="checkbox" value="Menor Preço" />
             <div class="control_indicator"></div>
           </label>
-          <div class="subitem-nenhuma">
-            <input type="text" value="" placeholder="Escreva aqui seu motivo" />
-          </div>
         </div>
       </div>
-      <div lass="torra_form_button">
+      <div class="control-group row">
+        <label class="control control-checkbox">
+          Nenhuma das alternativas acima
+          <input type="checkbox" value="Nenhuma das alternativas acima" />
+          <div class="control_indicator"></div>
+        </label>
+        <div class="subitem-nenhuma">
+          <input class="input_nenhuma" type="text" value="" placeholder="Escreva aqui seu motivo" />
+        </div>
+      </div>
+      <div class="torra_form_button">
         <button type="button">Enviar</button>
       </div>
     </form>
@@ -114,6 +121,7 @@
 
     </footer>
   </section>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
   <script src="./torra-pesquisa.js"></script>
 </body>

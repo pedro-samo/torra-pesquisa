@@ -30,6 +30,15 @@
   column-gap: 100px;
   flex-wrap: wrap;
   position: relative;
+
+  &.row {
+    margin-top: -15px;
+
+    @media only screen and (max-width: 768px) {
+      margin-top: -17px;
+      margin-left: -11px;
+    }
+  }
 }
 
 .control input {

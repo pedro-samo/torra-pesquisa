@@ -1,6 +1,8 @@
-import { getEmailAndId, getSelectedValue, getMultiSelectedValue, showToastifyError } from "./utils";
+import { getEmailAndId, showToastifyError } from "./utils";
 
 window.addEventListener("DOMContentLoaded", () => {
+  const submitButton = document.querySelector(".torra_form_button button");
+
   const optionsMaisBeneficios = document.querySelector(".subitem-beneficios");
   const nenhumaAlternativa = document.querySelector(`input[value="Nenhuma das alternativas acima"]`);
   const inputNenhumaAlternativa = document.querySelector(".subitem-nenhuma");
@@ -41,92 +43,111 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
 
-  // const sendForm = () => {
-  //   submitButton.addEventListener("click", async (e) => {
-  //     e.preventDefault();
-  //     const Email = getEmailAndId().email;
-  //     const Customer_ID = getEmailAndId().id;
-  //     const TipoPeleRosto = getSelectedValue("TipoPeleRosto");
-  //     const BeneficiosRelevantesProtetorSolar = getMultiSelectedValue("BeneficiosRelevantesProtetorSolar input");
-  //     const JaUsouVichyIdealSoleilClarify = getSelectedValue("JaUsouVichyIdealSoleilClarify");
-  //     const JaUsouVichyCapitalSoleilUVPigmentControl = getSelectedValue("JaUsouVichyCapitalSoleilUVPigmentControl");
-  //     const ProtetorSolarUsaAtualmente = document.getElementById("ProtetorSolarUsaAtualmente").value;
-  //     const vichyIdealModalAnswers = () => {
-  //       const result = {};
-  //       vichyIdealModalQuestions.forEach((question) => {
-  //         result[question] = getSelectedValue(question);
-  //       });
-  //       return result;
-  //     };
-  //     const vichyCapialModalAnswers = () => {
-  //       const result = {};
-  //       vichyCapialModalQuestions.forEach((question) => {
-  //         result[question] = getSelectedValue(question);
-  //       });
-  //       return result;
-  //     };
-  //     if (!Email || !Customer_ID) {
-  //       showToastifyError("Tivemos um erro para capturar seu e-mail");
-  //       return;
-  //     }
-  //     if (
-  //       !TipoPeleRosto ||
-  //       !BeneficiosRelevantesProtetorSolar ||
-  //       !JaUsouVichyIdealSoleilClarify ||
-  //       !JaUsouVichyCapitalSoleilUVPigmentControl ||
-  //       !ProtetorSolarUsaAtualmente
-  //     ) {
-  //       showToastifyError("Responda todas as perguntas");
-  //       return;
-  //     }
-  //     const fields = {
-  //       Email,
-  //       Customer_ID,
-  //       TipoPeleRosto,
-  //       BeneficiosRelevantesProtetorSolar,
-  //       JaUsouVichyIdealSoleilClarify,
-  //       JaUsouVichyCapitalSoleilUVPigmentControl,
-  //       ProtetorSolarUsaAtualmente,
-  //       ...vichyIdealModalAnswers(),
-  //       ...vichyCapialModalAnswers()
-  //     };
-  //     const data = JSON.stringify({
-  //       deName: "tb_PesquisaProtetorSolarVichy",
-  //       fields
-  //     });
-  //     submitButton.innerText = "Enviando...";
-  //     submitButton.disabled = true;
-  //     submitButton.style.pointerEvents = "none";
-  //     try {
-  //       const response = await fetch("/integracao-dermaclub-pesquisa", {
-  //         method: "POST",
-  //         body: data
-  //       });
-  //       if (!response.ok) {
-  //         throw new Error("Erro no envio dos dados");
-  //       }
-  //       const responseData = await response.json();
-  //       if (responseData.statusCode === 400) {
-  //         showToastifyError("Ops! E-mail já cadastrado!");
-  //       } else if (responseData.statusCode === 500) {
-  //         showToastifyError("Ops! Revise seus dados e tente novamente!");
-  //       } else {
-  //         window.location.href =
-  //           process.env.NODE_ENV === "production" ? "/dermaclub-vichy-success" : "/dermaclub-vichy-success.html";
-  //       }
-  //     } catch (error) {
-  //       showToastifyError("Ops! E-mail já cadastrado!");
-  //     } finally {
-  //       setTimeout(() => {
-  //         submitButton.innerText = "Enviar";
-  //         submitButton.disabled = false;
-  //         submitButton.style.pointerEvents = "auto";
-  //       }, 1000);
-  //     }
-  //   });
-  // };
-  // sendForm();
+  const atLeastOneTrueOrValidString = (obj) => {
+    return Object.keys(obj).some((key) => {
+      const value = obj[key];
+      return value === true || (typeof value === "string" && value.trim() !== "");
+    });
+  };
 
+  const sendForm = () => {
+    submitButton.addEventListener("click", async (e) => {
+      e.preventDefault();
+
+      const email = getEmailAndId();
+
+      const qualidade_produto = document.querySelector(`input[value="Qualidade do produto"]`).checked;
+      const variedade_produtos = document.querySelector(`input[value="Variedade de produtos"]`).checked;
+      const disponibilidade_tamanhos = document.querySelector(`input[value="Disponibilidade de tamanhos"]`).checked;
+      const menor_prazo_de_entrega = document.querySelector(`input[value="Menor prazo de entrega"]`).checked;
+      const frete_gratis = document.querySelector(`input[value="Frete grátis"]`).checked;
+      const facilidade_troca_devolucao = document.querySelector(
+        `input[value="Facilidade para troca e devolução"]`
+      ).checked;
+      const cupom_desconto = document.querySelector(`input[value="Cupons de desconto"]`).checked;
+      const desconto_progressivo = document.querySelector(`input[value="Descontos Progressivos"]`).checked;
+      const programa_fidelidade = document.querySelector(`input[value="Programa de Fidelidade"]`).checked;
+      const cashback_compras = document.querySelector(`input[value="Cashback nas Compras"]`).checked;
+      const menor_preco = document.querySelector(`input[value="Menor Preço"]`).checked;
+      const nenhuma_anterior = document.querySelector(`.input_nenhuma`).value;
+
+      const fields = {
+        qualidade_produto,
+        variedade_produtos,
+        disponibilidade_tamanhos,
+        menor_prazo_de_entrega,
+        frete_gratis,
+        facilidade_troca_devolucao,
+        cupom_desconto,
+        desconto_progressivo,
+        programa_fidelidade,
+        cashback_compras,
+        menor_preco,
+        nenhuma_anterior
+      };
+
+      if (!atLeastOneTrueOrValidString(fields)) return showToastifyError("Há respostas não preenchidas");
+
+      if (!email) {
+        showToastifyError("Tivemos um erro para capturar seu e-mail");
+        return;
+      }
+
+      const sendData = Object.assign(fields, { email });
+
+      const data = JSON.stringify({
+        deName: "Tb_cloudPage_pesquisa_reCompra",
+        fields: sendData
+      });
+
+      submitButton.innerText = "Enviando...";
+      submitButton.disabled = true;
+      submitButton.style.pointerEvents = "none";
+
+      try {
+        const response = await fetch("/integracao-torra-pesquisa", {
+          method: "POST",
+          body: data
+        });
+
+        if (!response.ok) {
+          throw new Error("Erro no envio dos dados");
+        }
+
+        const responseData = await response.json();
+
+        if (responseData.statusCode === 400) {
+          showToastifyError("Ops! E-mail já cadastrado!");
+        }
+
+        if (responseData.statusCode === 500) {
+          showToastifyError("Ops! Revise seus dados e tente novamente!");
+        }
+
+        if (responseData.statusCode === 200) {
+          Swal.fire({
+            position: "center",
+            icon: "success",
+            title: "Enviado com sucesso!",
+            showConfirmButton: false,
+            timer: 3000
+          });
+
+          document.querySelector("form").reset();
+        }
+      } catch (error) {
+        showToastifyError("Ops! E-mail já cadastrado!");
+      } finally {
+        setTimeout(() => {
+          submitButton.innerText = "Enviar";
+          submitButton.disabled = false;
+          submitButton.style.pointerEvents = "auto";
+        }, 1000);
+      }
+    });
+  };
+
+  sendForm();
   showMaisBeneficiosOptions();
   showNenhumaInputText();
   uncheckNenhumaAlternativa();
