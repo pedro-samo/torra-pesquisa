@@ -2,21 +2,55 @@ import { getEmailAndId, showToastifyError } from "./utils";
 
 window.addEventListener("DOMContentLoaded", () => {
   const submitButton = document.querySelector(".torra_form_button button");
-
+  const checkboxes = document.querySelectorAll(
+    ".torra_form .control-box .control-group > label > input[type='checkbox']"
+  );
+  const maisBeneficios = document.querySelector(`input[value="Mais benefícios"]`);
   const optionsMaisBeneficios = document.querySelector(".subitem-beneficios");
+  const optionsMaisBeneficiosInputs = document.querySelectorAll(".subitem-beneficios input");
   const nenhumaAlternativa = document.querySelector(`input[value="Nenhuma das alternativas acima"]`);
   const inputNenhumaAlternativa = document.querySelector(".subitem-nenhuma");
   const checkboxesExceptNenhuamAlternativa = document.querySelectorAll(
     'input[type="checkbox"]:not([value="Nenhuma das alternativas acima"])'
   );
+  const checkboxesExceptMaisBeneficios = document.querySelectorAll(
+    'input[type="checkbox"]:not([value="Mais benefícios"])'
+  );
+
+  const onlyOneChecked = () => {
+    checkboxesExceptMaisBeneficios.forEach((checkbox) => {
+      checkbox.addEventListener("change", function () {
+        if (this.checked) {
+          checkboxesExceptMaisBeneficios.forEach((cb) => {
+            if (cb !== this) {
+              cb.checked = false;
+            }
+          });
+        }
+      });
+    });
+  };
+
+  const clearMaisBeneficios = () => {
+    checkboxesExceptMaisBeneficios.forEach((item) => {
+      item.addEventListener("click", () => {
+        if (!item.closest(".subitem-beneficios")) {
+          optionsMaisBeneficios.classList.remove("show");
+          maisBeneficios.checked = false;
+          optionsMaisBeneficiosInputs.forEach((item) => (item.checked = false));
+        }
+      });
+    });
+  };
 
   const showMaisBeneficiosOptions = () => {
-    const maisBeneficios = document.querySelector(`input[value="Mais benefícios"]`);
     maisBeneficios.addEventListener("change", (e) => {
       optionsMaisBeneficios.classList.toggle("show");
       if (!e.target.checked) {
         const optionsInput = optionsMaisBeneficios.querySelectorAll("input");
         optionsInput.forEach((input) => (input.checked = false));
+      } else {
+        checkboxesExceptMaisBeneficios.forEach((item) => (item.checked = false));
       }
     });
   };
@@ -117,7 +151,7 @@ window.addEventListener("DOMContentLoaded", () => {
         const responseData = await response.json();
 
         if (responseData.statusCode === 400) {
-          showToastifyError("Ops! E-mail já cadastrado!");
+          showToastifyError("Ops! Resposta já cadastrada!");
         }
 
         if (responseData.statusCode === 500) {
@@ -136,7 +170,7 @@ window.addEventListener("DOMContentLoaded", () => {
           document.querySelector("form").reset();
         }
       } catch (error) {
-        showToastifyError("Ops! E-mail já cadastrado!");
+        showToastifyError("Ops! Resposta já cadastrada!");
       } finally {
         setTimeout(() => {
           submitButton.innerText = "Enviar";
@@ -147,6 +181,8 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   };
 
+  onlyOneChecked();
+  clearMaisBeneficios();
   sendForm();
   showMaisBeneficiosOptions();
   showNenhumaInputText();
