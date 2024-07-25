@@ -104,6 +104,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const cashback_compras = document.querySelector(`input[value="Cashback nas Compras"]`).checked;
       const menor_preco = document.querySelector(`input[value="Menor Preço"]`).checked;
       const nenhuma_anterior = document.querySelector(`.input_nenhuma`).value;
+      const motivo_escolha = document.querySelector(`.input_explicacao`).value;
 
       const fields = {
         qualidade_produto,
@@ -120,14 +121,14 @@ window.addEventListener("DOMContentLoaded", () => {
         nenhuma_anterior
       };
 
-      if (!atLeastOneTrueOrValidString(fields)) return showToastifyError("Há respostas não preenchidas");
+      if (!atLeastOneTrueOrValidString(fields)) return showToastifyError("Selecione uma das opções");
 
       if (!email) {
         showToastifyError("Tivemos um erro para capturar seu e-mail");
         return;
       }
 
-      const sendData = Object.assign(fields, { email });
+      const sendData = Object.assign(fields, { email, motivo_escolha });
 
       const data = JSON.stringify({
         deName: "Tb_cloudPage_pesquisa_reCompra",

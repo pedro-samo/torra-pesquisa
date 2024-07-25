@@ -104,6 +104,24 @@
         }
       }
     }
+
+    .subitem-explicacao {
+      input {
+        border: none;
+        border-bottom: 1px solid #ff5101;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 18px;
+        text-align: left;
+        width: 100%;
+        padding-bottom: 5px;
+        color: #a3a3a3;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
   }
 
   &_footer {

@@ -13,6 +13,47 @@
   color: #ff5101;
 }
 
+.explicacao {
+  display: flex;
+  gap: 5px;
+
+  @media only screen and (max-width: 768px) {
+    gap: 0px;
+    flex-direction: column;
+  }
+
+  &-control {
+    font-family: arial;
+    display: block;
+    position: relative;
+    margin-bottom: 5px;
+    padding-top: 8px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 22.74px;
+    text-align: left;
+    color: #ff5101;
+
+    &-span {
+      font-family: arial;
+      position: relative;
+      margin-bottom: 5px;
+      padding-top: 8px;
+      cursor: pointer;
+      font-weight: 700;
+      line-height: 22.74px;
+      text-align: left;
+      color: #ff5101;
+      font-size: 16px;
+
+      @media only screen and (max-width: 768px) {
+        padding-top: 0px;
+      }
+    }
+  }
+}
+
 .control-box {
   display: flex;
   gap: 40px;
